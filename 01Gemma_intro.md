@@ -8,6 +8,11 @@ Following tutorial from: https://github.com/rcc-uchicago/genetic-data-analysis-2
 
 # Prepare data for GWAS:
 
-## format.genotypes.for.gemma.R
+## Format for GEMMA:
 
-> install.packages("stringr", repos='http://cran.us.r-project.org')
+#### format.genotypes.for.gemma.R
+
+> install.packages("stringr", repos='http://cran.us.r-project.org') 
+
+
+
