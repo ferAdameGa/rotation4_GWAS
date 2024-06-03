@@ -73,6 +73,64 @@ with open('replace_id.txt','w') as tfile:
 ```
 SLURM script: "/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/change_IDs.sh"
 
+### Filter IDs on excel:
+
+Slurm script: "/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filter_IDs.sh"
+```
+#!/bin/bash
+#
+#----------------------------------------------------------------
+# running a multiple independent jobs
+#----------------------------------------------------------------
+#
+#  Defining options for slurm how to run
+#----------------------------------------------------------------
+#
+#SBATCH --job-name=filger
+#SBATCH --output=filter.log
+#        %A and %a are placeholders for the jobid and taskid, resp.
+#
+#Number of CPU cores to use within one node
+#SBATCH -c 5
+#
+#Define the number of hours the job should run. 
+#Maximum runtime is limited to 10 days, ie. 240 hours
+#SBATCH --time=240:00:00
+
+#SBATCH --mail-user=madamega@ist.ac.at
+#SBATCH --mail-type=ALL
+#SBATCH --array=1-8
+#18
+#IMPORTANT NUMBER OF FILES TO BE PROCESSED
+#number of files in a directory: ls -1 | wc -l
+#for this job: ls /nfs/scistore18/vicosgrp/madamega/artemiaImprinting/analysis/F1C1KS/*1.fastq -1 | wc -l = 11
+
+#Define the amount of RAM used by your job in GigaBytes
+#In shared memory applications this is shared among multiple CPUs
+#SBATCH --mem=99G
+#
+#Do not requeue the job in the case it fails.
+#SBATCH --no-requeue
+#
+#Do not export the local environment to the compute nodes
+#SBATCH --export=NONE
+#SBATCH --reservation=vicosgrp_75
+unset SLURM_EXPORT_ENV
+
+#module load 
+module load bcftools
+
+#IMPORTANT DO NOT LOAD JAVA 
+# Search all the fastq files from the "data" directory and generate the array
+dir='/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/rename_Am_all_stitchRun1_Chr'
+
+
+file=$(ls ${dir}*.vcf.gz | sed -n ${SLURM_ARRAY_TASK_ID}p)
+base=$(basename $file ".vcf.gz")
+echo ${base}
+
+bcftools view -S IDs.txt ${base}.vcf.gz > filtered_vcf/filt_chr${SLURM_ARRAY_TASK_ID}.vcf
+```
 
 VCF convertion: 
 
