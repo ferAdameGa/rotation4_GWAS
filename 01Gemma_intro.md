@@ -54,6 +54,26 @@ Different format:
 10xNEW-Plate10-19_Am_Pla_pb1179_v3.5
 ```
 
+Replace IDs file:
+
+```
+file = open("id_vcf.txt", "r")
+vcf_id=file.readlines()
+file.close()
+
+ids=[]
+for name in vcf_id:    
+    splited=name.split("Am_")
+    final=splited[1].split("_")
+    ids.append(final[1])
+    
+
+with open('replace_id.txt','w') as tfile:
+	tfile.write('\n'.join(ids))
+```
+SLURM script: "/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/change_IDs.sh"
+
+
 VCF convertion: 
 
 
