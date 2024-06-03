@@ -132,6 +132,8 @@ echo ${base}
 bcftools view -S IDs.txt ${base}.vcf.gz > filtered_vcf/filt_chr${SLURM_ARRAY_TASK_ID}.vcf
 ```
 
+/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/*
+
 VCF convertion: 
 
 
