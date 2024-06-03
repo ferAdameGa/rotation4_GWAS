@@ -136,6 +136,32 @@ bcftools view -S IDs.txt ${base}.vcf.gz > filtered_vcf/filt_chr${SLURM_ARRAY_TAS
 
 VCF convertion: 
 
+```
+plink2 --vcf /nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/filt_chr1.vcf --recode bimbam --out chr1.bimbam
+PLINK v2.00a6LM AVX2 AMD (26 May 2024)         www.cog-genomics.org/plink/2.0/
+(C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to chr1.bimbam.log.
+Options in effect:
+  --export bimbam
+  --out chr1.bimbam
+  --vcf /nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/filt_chr1.vcf
 
+Start time: Mon Jun  3 18:07:46 2024
+128807 MiB RAM detected, ~109883 available; reserving 64403 MiB for main
+workspace.
+Using up to 24 threads (change this with --threads).
+--vcf: 2940701 variants scanned.
+--vcf: chr1.bimbam-temporary.pgen + chr1.bimbam-temporary.pvar.zst +
+chr1.bimbam-temporary.psam written.
+949 samples (0 females, 0 males, 949 ambiguous; 949 founders) loaded from
+chr1.bimbam-temporary.psam.
+2940701 variants loaded from chr1.bimbam-temporary.pvar.zst.
+Note: No phenotype data present.
+Error: Only VCF, BCF, oxford, bgen-1.x, haps, hapslegend, A, AD, Av, ped, tped,
+compound-genotypes, phylip, phylip-phased, and ind-major-bed output have been
+implemented so far.
+End time: Mon Jun  3 18:15:36 2024
+
+```
 
 
