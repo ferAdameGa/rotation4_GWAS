@@ -134,7 +134,65 @@ bcftools view -S IDs.txt ${base}.vcf.gz > filtered_vcf/filt_chr${SLURM_ARRAY_TAS
 
 /nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/*
 
-VCF convertion: 
+## VCF convertion: 
+
+### To plink
+```
+#!/bin/bash
+#
+#----------------------------------------------------------------
+# running a multiple independent jobs
+#----------------------------------------------------------------
+#
+#  Defining options for slurm how to run
+#----------------------------------------------------------------
+#
+#SBATCH --job-name=convertion
+#SBATCH --output=convert.log
+#        %A and %a are placeholders for the jobid and taskid, resp.
+#
+#Number of CPU cores to use within one node
+#SBATCH -c 5
+#
+#Define the number of hours the job should run. 
+#Maximum runtime is limited to 10 days, ie. 240 hours
+#SBATCH --time=240:00:00
+
+#SBATCH --mail-user=madamega@ist.ac.at
+#SBATCH --mail-type=ALL
+#SBATCH --array=1-8
+#18
+#IMPORTANT NUMBER OF FILES TO BE PROCESSED
+#number of files in a directory: ls -1 | wc -l
+#for this job: ls /nfs/scistore18/vicosgrp/madamega/artemiaImprinting/analysis/F1C1KS/*1.fastq -1 | wc -l = 11
+
+#Define the amount of RAM used by your job in GigaBytes
+#In shared memory applications this is shared among multiple CPUs
+#SBATCH --mem=99G
+#
+#Do not requeue the job in the case it fails.
+#SBATCH --no-requeue
+#
+#Do not export the local environment to the compute nodes
+#SBATCH --export=NONE
+#SBATCH --reservation=vicosgrp_75
+unset SLURM_EXPORT_ENV
+
+
+module load plink
+
+dir='/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/'
+
+file=$(ls ${dir}*.vcf | sed -n ${SLURM_ARRAY_TASK_ID}p)
+base=$(basename $file ".vcf")
+echo ${base}
+
+#plink2 --vcf ${base}.vcf --recode --out plink_${base}
+plink2 --vcf ${dir}${base}.vcf --make-bed --out plink_${base}
+```
+
+### To BIMBAM
+
 
 ```
 plink2 --vcf /nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/filt_chr1.vcf --recode bimbam --out chr1.bimbam
