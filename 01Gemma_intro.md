@@ -2,28 +2,14 @@
 
 GEMMA github page: https://github.com/genetics-statistics/GEMMA?tab=readme-ov-file#installation
 
-## Tutorial
-
-Following tutorial from: https://github.com/rcc-uchicago/genetic-data-analysis-2/blob/master/slides.pdf
-
 # Input
 ``` slurm
 GEMMA requires four main input files containing genotypes, phenotypes, relatedness matrix and
 (optionally) covariates. Genotype and phenotype files can be in two formats, either both in the
 PLINK binary ped format or both in the BIMBAM format
 ```
-# Prepare data for GWAS:
 
-## Format for GEMMA:
-
-#### format.genotypes.for.gemma.R
-
-> install.packages("stringr", repos='http://cran.us.r-project.org')
->
-
-### BIMBAM format
-
-IDs must match
+### IDs must match
 
 IDs excel (from python code):
 
@@ -76,6 +62,7 @@ SLURM script: "/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/change_IDs.
 ### Filter IDs on excel:
 
 Slurm script: "/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filter_IDs.sh"
+
 ``` ruby
 #!/bin/bash
 #
@@ -134,7 +121,9 @@ bcftools view -S IDs.txt ${base}.vcf.gz > filtered_vcf/filt_chr${SLURM_ARRAY_TAS
 
 /nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/*
 
-## VCF convertion: 
+## Convertion: 
+
+(just as reference)
 
 ### To plink
 ```
@@ -281,5 +270,3 @@ module load vcftools
 vcftools --vcf ${dir}${base}.vcf --plink --out ${base}
 ```
 
-
-### Phenotypes
