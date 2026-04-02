@@ -17,7 +17,7 @@ C:\Users\madamega\Documents\ISTA\Rotations\4\IDs.txt
 
 Check IDs of VCF:
 
-> bcftools query -l "/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/Am_all_stitchRun1_Chr1.final.vcf.gz" > id_vcf.txt
+> bcftools query -l "rotation4/VCF_files/Am_all_stitchRun1_Chr1.final.vcf.gz" > id_vcf.txt
 
 Different format:
 
@@ -57,11 +57,11 @@ for name in vcf_id:
 with open('replace_id.txt','w') as tfile:
 	tfile.write('\n'.join(ids))
 ```
-SLURM script: "/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/change_IDs.sh"
+SLURM script: "rotation4/VCF_files/change_IDs.sh"
 
 ### Filter IDs on excel:
 
-Slurm script: "/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filter_IDs.sh"
+Slurm script: "madamega/rotation4/VCF_files/filter_IDs.sh"
 
 ``` ruby
 #!/bin/bash
@@ -109,7 +109,7 @@ module load bcftools
 
 #IMPORTANT DO NOT LOAD JAVA 
 # Search all the fastq files from the "data" directory and generate the array
-dir='/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/rename_Am_all_stitchRun1_Chr'
+dir='madamega/rotation4/VCF_files/rename_Am_all_stitchRun1_Chr'
 
 
 file=$(ls ${dir}*.vcf.gz | sed -n ${SLURM_ARRAY_TASK_ID}p)
@@ -119,7 +119,7 @@ echo ${base}
 bcftools view -S IDs.txt ${base}.vcf.gz > filtered_vcf/filt_chr${SLURM_ARRAY_TASK_ID}.vcf
 ```
 
-/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/*
+madamega/rotation4/VCF_files/filtered_vcf/*
 
 ## Convertion: 
 
@@ -170,7 +170,7 @@ unset SLURM_EXPORT_ENV
 
 module load plink
 
-dir='/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/'
+dir='madamega/rotation4/VCF_files/filtered_vcf/'
 
 file=$(ls ${dir}*.vcf | sed -n ${SLURM_ARRAY_TASK_ID}p)
 base=$(basename $file ".vcf")
@@ -184,14 +184,14 @@ plink2 --vcf ${dir}${base}.vcf --make-bed --out plink_${base}
 
 
 ```
-plink2 --vcf /nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/filt_chr1.vcf --recode bimbam --out chr1.bimbam
+plink2 --vcf madamega/rotation4/VCF_files/filtered_vcf/filt_chr1.vcf --recode bimbam --out chr1.bimbam
 PLINK v2.00a6LM AVX2 AMD (26 May 2024)         www.cog-genomics.org/plink/2.0/
 (C) 2005-2024 Shaun Purcell, Christopher Chang   GNU General Public License v3
 Logging to chr1.bimbam.log.
 Options in effect:
   --export bimbam
   --out chr1.bimbam
-  --vcf /nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/filt_chr1.vcf
+  --vcf madamega/rotation4/VCF_files/filtered_vcf/filt_chr1.vcf
 
 Start time: Mon Jun  3 18:07:46 2024
 128807 MiB RAM detected, ~109883 available; reserving 64403 MiB for main
@@ -215,7 +215,7 @@ https://www.biostars.org/p/9484948/
 
 ### To PED:
 
-/nfs/scistore17/robingrp/madamega/rotation4/PLINK_PED_files/
+madamega/rotation4/PLINK_PED_files/
 
 ``` ruby
 #!/bin/bash
@@ -259,7 +259,7 @@ https://www.biostars.org/p/9484948/
 unset SLURM_EXPORT_ENV
 
 
-dir='/nfs/scistore17/robingrp/madamega/rotation4/VCF_files/filtered_vcf/'
+dir='madamega/rotation4/VCF_files/filtered_vcf/'
 
 file=$(ls ${dir}*.vcf | sed -n ${SLURM_ARRAY_TASK_ID}p)
 base=$(basename $file ".vcf")
